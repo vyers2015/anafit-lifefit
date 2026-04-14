@@ -10,12 +10,12 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#D4645A',
-          dark: '#B84D44',
-          light: '#E8857D',
+          DEFAULT: 'var(--color-primary)',
+          dark: 'var(--color-primary-dark)',
+          light: 'var(--color-primary-light)',
         },
-        secondary: '#F5A78E',
-        accent: '#E8845A',
+        secondary: 'var(--color-secondary)',
+        accent: 'var(--color-accent)',
         warm: {
           50: '#FDF5F0',
           100: '#F7EDE6',

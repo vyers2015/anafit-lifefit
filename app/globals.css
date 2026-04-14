@@ -4,13 +4,56 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Default theme: coral */
 :root {
-  --primary: #D4645A;
-  --primary-dark: #B84D44;
-  --secondary: #F5A78E;
-  --accent: #E8845A;
-  --warm-50: #FDF5F0;
-  --warm-100: #F7EDE6;
+  --color-primary: #D4645A;
+  --color-primary-dark: #B84D44;
+  --color-primary-light: #E8857D;
+  --color-secondary: #F5A78E;
+  --color-accent: #E8845A;
+  --color-bg: #FDF5F0;
+  --color-bg-section: #F7EDE6;
+}
+
+/* Theme overrides applied via body class */
+body.theme-rose {
+  --color-primary: #BE185D;
+  --color-primary-dark: #9D174D;
+  --color-primary-light: #EC4899;
+  --color-secondary: #F9A8D4;
+  --color-accent: #F472B6;
+  --color-bg: #FFF0F7;
+  --color-bg-section: #FCE7F3;
+}
+
+body.theme-terracota {
+  --color-primary: #C2410C;
+  --color-primary-dark: #9A3412;
+  --color-primary-light: #EA580C;
+  --color-secondary: #FDBA74;
+  --color-accent: #F97316;
+  --color-bg: #FFF7F0;
+  --color-bg-section: #FFEDD5;
+}
+
+body.theme-purple {
+  --color-primary: #7C3AED;
+  --color-primary-dark: #6D28D9;
+  --color-primary-light: #A78BFA;
+  --color-secondary: #C4B5FD;
+  --color-accent: #8B5CF6;
+  --color-bg: #F8F0FF;
+  --color-bg-section: #EDE9FE;
+}
+
+body.theme-emerald {
+  --color-primary: #059669;
+  --color-primary-dark: #047857;
+  --color-primary-light: #10B981;
+  --color-secondary: #6EE7B7;
+  --color-accent: #34D399;
+  --color-bg: #F0FFF8;
+  --color-bg-section: #D1FAE5;
 }
 
 * {
