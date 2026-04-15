@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { Product } from '@/lib/types'
+import ImageUpload from '@/components/admin/ImageUpload'
 
 const CATEGORIES = ['legging', 'top', 'conjunto', 'shorts', 'calça', 'macacão', 'jaqueta']
 const SIZES = ['PP', 'P', 'M', 'G', 'GG', 'XGG']
@@ -34,7 +35,6 @@ export default function ProductForm({ product }: ProductFormProps) {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
-  const [imagePreview, setImagePreview] = useState('')
 
   useEffect(() => {
     if (product) {
@@ -53,7 +53,6 @@ export default function ProductForm({ product }: ProductFormProps) {
         discount_percent: product.discount_percent?.toString() || '',
         stock: product.stock.toString(),
       })
-      setImagePreview(product.image_url)
     }
   }, [product])
 
@@ -266,36 +265,12 @@ export default function ProductForm({ product }: ProductFormProps) {
           <div className="space-y-5">
             {/* Image */}
             <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
-              <h2 className="font-semibold text-gray-900 text-base">Imagem</h2>
-
-              {/* Preview */}
-              <div className="aspect-[4/5] rounded-xl overflow-hidden bg-gray-100 border-2 border-dashed border-gray-200">
-                {imagePreview ? (
-                  <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" onError={() => setImagePreview('')} />
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center text-gray-400">
-                    <svg className="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    <p className="text-xs">Preview da imagem</p>
-                  </div>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">URL da imagem</label>
-                <input
-                  type="url"
-                  value={form.image_url}
-                  onChange={(e) => {
-                    setForm({ ...form, image_url: e.target.value })
-                    setImagePreview(e.target.value)
-                  }}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D4645A] transition-colors"
-                  placeholder="https://..."
-                />
-                <p className="text-xs text-gray-400 mt-1">Cole a URL da imagem para ver o preview acima</p>
-              </div>
+              <h2 className="font-semibold text-gray-900 text-base">Imagem do Produto</h2>
+              <ImageUpload
+                value={form.image_url}
+                onChange={(url) => setForm({ ...form, image_url: url })}
+                bucket="products"
+              />
             </div>
 
             {/* Flags */}

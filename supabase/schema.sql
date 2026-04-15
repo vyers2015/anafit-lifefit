@@ -74,6 +74,31 @@ INSERT INTO site_settings (key, value) VALUES
   ('about_text', 'A Anafit & LipeFit surgiu do desejo de criar roupas que acompanhem cada agachamento, cada corrida, cada superação.')
 ON CONFLICT (key) DO NOTHING;
 
+-- =============================================
+-- STORAGE: buckets de imagens
+-- =============================================
+-- Execute estes comandos no Supabase Dashboard → Storage
+-- OU rode o SQL abaixo no SQL Editor
+
+-- Criar buckets públicos
+INSERT INTO storage.buckets (id, name, public) VALUES ('products', 'products', true) ON CONFLICT DO NOTHING;
+INSERT INTO storage.buckets (id, name, public) VALUES ('banners', 'banners', true) ON CONFLICT DO NOTHING;
+INSERT INTO storage.buckets (id, name, public) VALUES ('images', 'images', true) ON CONFLICT DO NOTHING;
+
+-- Política: leitura pública
+CREATE POLICY "public_read_products" ON storage.objects FOR SELECT USING (bucket_id = 'products');
+CREATE POLICY "public_read_banners" ON storage.objects FOR SELECT USING (bucket_id = 'banners');
+CREATE POLICY "public_read_images" ON storage.objects FOR SELECT USING (bucket_id = 'images');
+
+-- Política: upload apenas para usuários autenticados
+CREATE POLICY "auth_upload_products" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'products' AND auth.role() = 'authenticated');
+CREATE POLICY "auth_upload_banners" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'banners' AND auth.role() = 'authenticated');
+CREATE POLICY "auth_upload_images" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'images' AND auth.role() = 'authenticated');
+
+-- Política: delete apenas para usuários autenticados
+CREATE POLICY "auth_delete_products" ON storage.objects FOR DELETE USING (bucket_id = 'products' AND auth.role() = 'authenticated');
+CREATE POLICY "auth_delete_banners" ON storage.objects FOR DELETE USING (bucket_id = 'banners' AND auth.role() = 'authenticated');
+
 -- Dados iniciais - Slides do carrossel
 INSERT INTO carousel_slides (title, subtitle, cta_text, cta_link, image_url, badge, order_index) VALUES
   ('Nova Coleção Verão', 'Looks poderosos para treinos ainda mais incríveis', 'Ver Lançamentos', '/produtos?filter=new', 'https://picsum.photos/seed/gym1/1400/600', 'Novo', 1),

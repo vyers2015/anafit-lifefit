@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import { mockSlides } from '@/lib/mock-data'
 import { CarouselSlide } from '@/lib/types'
+import ImageUpload from '@/components/admin/ImageUpload'
 
 const emptySlide: Omit<CarouselSlide, 'id'> = {
   title: '',
@@ -266,14 +267,12 @@ export default function AdminBannersPage() {
 
             <form onSubmit={handleSave} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">URL da imagem *</label>
-                <input
-                  required
-                  type="url"
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">Imagem do banner</label>
+                <ImageUpload
                   value={form.image_url}
-                  onChange={(e) => { setForm({ ...form, image_url: e.target.value }); setPreview(e.target.value) }}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D4645A]"
-                  placeholder="https://..."
+                  onChange={(url) => { setForm({ ...form, image_url: url }); setPreview(url) }}
+                  bucket="banners"
+                  aspectClass="aspect-video"
                 />
               </div>
               <div>
